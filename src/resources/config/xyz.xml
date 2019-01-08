@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.0.xsd
+http://www.springframework.org/schema/util
+http://www.springframework.org/schema/util/spring-util-4.0.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+http://www.springframework.org/schema/tx
+ http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+ http://www.springframework.org/schema/aop
+ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd "
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans">
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="com.neuedu.*"/>
+    <bean name="章文翔" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property value="org.springframework.web.servlet.view.JstlView" name="viewClass"/>
+        <property value="WEB-INF/" name="prefix"/>
+        <property value=".jsp" name="suffix"/>
+    </bean>
+
+        <!--通过Bean里的name值的方法,给pojo类中的成员赋值  使用ApplicationContext容器来管理Bean-->
+    <bean name="user" class="com.neuedu.pojo.User">
+        <property name="id" value="1"/>
+        <property name="name" value="尤同斌1asdad"/>
+        <property name="pwd" value="123"/>
+        <property name="dept" ref="dept"/>
+        <!--name 值获取的是pojo类里的set成员变量-->
+        <!--ref对应的是引用类型,嵌套pojo类使用-->
+    </bean>
+
+    <bean name="dept" class="com.neuedu.pojo.Dept" scope="singleton">
+        <!--scope="singleton" 代表单例模式,默认就是.   prototype不是单例-->
+        <property name="pname" value="后勤"/>
+        <property name="pass">
+            <array>
+                <value>123</value>
+                <value>abc</value>
+                <!--数组类型的赋值方式-->
+            </array>
+        </property>
+
+    </bean>
+
+
+        <!--相当于反射,给pojo中的User类通过下标 赋值   (pojo类中需要手写构造函数,不能用Data代替) -->
+    <bean class="com.neuedu.pojo.User" >
+    <constructor-arg index="0" value="123"/>
+        <constructor-arg index="1" value="31"/>
+        <constructor-arg index="2" value="asd"/>
+        <constructor-arg index="3" ref="dept"/>
+    </bean>
+
+    <!--autowire="byName"  通过ref名字去匹配另个bean表中的name值,获取到另个bean中的数据内容-->
+
+    <!--  Bean的作用域:    scope= singleton(单例),prototype(原型,每个对象都是单独的),
+                    request(每发一个请求创建一个对象),session(每创建一个会话,创建一个对象).
+    -->
+</beans>

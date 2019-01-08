@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserDao {
     List<User> lists();
-    User getone(String name);
+    User getone(Integer id);
     int update( User user);
     int insert(User user );
     int delete(Integer id);

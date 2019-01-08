@@ -15,8 +15,8 @@ public class ImUserService implements UserService {
     }
 
     @Override
-    public User getone(String name) {
-        return userDao.getone(name);
+    public User getone(Integer id) {
+        return userDao.getone(id);
     }
 
     @Override

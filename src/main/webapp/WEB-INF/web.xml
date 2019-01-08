@@ -25,6 +25,11 @@
   <servlet>
     <servlet-name>abc</servlet-name>              <!--DispatcherServlet 适配转发器-->
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <!--源文件夹   classpath    会到指定路径resources/config/xyz.xml 中读取文件; -->
+      <param-value>classpath:config/xyz.xml</param-value>
+    </init-param>
     <load-on-startup>1</load-on-startup>        <!--优先执行-->
   </servlet>
   <servlet-mapping>

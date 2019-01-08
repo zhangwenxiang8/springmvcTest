@@ -29,25 +29,26 @@ public class ImUserDao implements UserDao {
     }
 
     @Override
-    public User getone(String name) {
-      return JdbcUtil.getone("select * from user where name=?", new Ronmap<User>() {
+    public User getone(Integer id) {
+      return JdbcUtil.getone("select * from user where pid=?", new Ronmap<User>() {
           @Override
           public User RowMapping(ResultSet rs) {
              User user=new User();
               try {
+                  user.setId(rs.getInt("pid"));
                   user.setName(rs.getString("username"));
-                    user.setPwd(rs.getNString("password"));
+                    user.setPwd(rs.getString("password"));
               } catch (SQLException e) {
                   e.printStackTrace();
               }
               return user;
           }
-      },name);
+      },id);
     }
 
     @Override
     public int update( User user) {
-        return JdbcUtil.CUD("update user set username=?,password=? where username=?",user.getName(),user.getPwd());
+        return JdbcUtil.CUD("update user set username=?,password=? where pid=?",user.getName(),user.getPwd(),user.getId());
     }
 
     @Override
